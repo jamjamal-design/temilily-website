@@ -1,0 +1,46 @@
+var addToDom = function(element, content) {
+    if (document.body) {
+        document.body.appendChild(element);
+        if (content !== undefined) {
+            element.contentWindow.document.open('text/html');
+            element.contentWindow.document.write(content);
+            element.contentWindow.document.close();
+        }
+    } else if (window.addEventListener) {
+        window.addEventListener("load", function() {
+            document.body.appendChild(element);
+            if (content !== undefined) {
+                element.contentWindow.document.open('text/html');
+                element.contentWindow.document.write(content);
+                element.contentWindow.document.close();
+            }
+        }, false);
+    } else {
+        window.attachEvent("onload", function() {
+            document.body.appendChild(element);
+            if (content !== undefined) {
+                element.contentWindow.document.open('text/html');
+                element.contentWindow.document.write(content);
+                element.contentWindow.document.close();
+            }
+        });
+    }
+}
+var crm_prefix = "https://googleads.g.doubleclick.net/pagead/viewthroughconversion/";
+var conv_id_list = [977054356, 950697085, 370564948, 864947348, 11426705343, 1047257100, 992162373, 997144843, 343486363, 1041700610, 1061355802, 11078079188, 990712356, 16476210326, 11103064367, 704255822, 1044228596, 1055007256, 1055615794, 941705312, 606143638, 1038441020, 10805789679, 1056816978, 945894514, 987390658, 11025659175, 941686083, 16474874489, 1037963683, 11119559589, 1035558107, 11025717742, 11426774549, 1055907242, 749115756, 864938212, 10805886878, 1036652121, 622305021, 1039146555, 11444459187, 1067912547, 11034178841, 1043021450, 1033657903, 1042075501, 1056822678, 1017040472, 937800690, 954602153, 990900628, 951224271, 1034324169, 981158066];
+var crm_infix = "?userId=";
+var hashedId = "aac0d04ed160c38cb61d1463a4c865966c861e302eacb5dc8c73b2f01e9f5c38";
+var crm_suffix = "&guid=ON&script=0"
+if (conv_id_list !== undefined && conv_id_list.length !== 0) {
+    for (var i = 0; i < conv_id_list.length; i++) {
+        var crm_conv_id = conv_id_list[i];
+        var url = crm_prefix + crm_conv_id + crm_infix + hashedId + crm_suffix + "&rand=" + Math.random() ;
+        var imgElem = document.createElement('img');
+        imgElem.height=1;
+        imgElem.width=1;
+        imgElem.style.display = 'none';
+        imgElem.alt="";
+        imgElem.src = url;
+        addToDom(imgElem);
+    }
+}
